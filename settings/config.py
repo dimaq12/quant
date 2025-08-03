@@ -19,5 +19,7 @@ class Settings(BaseSettings):
     KAPPA_CRIT: float = Field(1.0, env="KAPPA_CRIT")
     TELEGRAM_TOKEN: str = Field(..., env="TELEGRAM_TOKEN")
     TELEGRAM_CHAT_ID: str = Field(..., env="TELEGRAM_CHAT_ID")
+    WS_MAX_RETRIES: int = Field(5, env="WS_MAX_RETRIES")
+    WS_RETRY_DELAY: float = Field(1.0, env="WS_RETRY_DELAY")
 
 settings = Settings()  # singleton
