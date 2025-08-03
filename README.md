@@ -26,6 +26,22 @@ graph TD
     Settings --> TelegramNotifier
 ```
 
+## Scheduler Usage
+
+```python
+import asyncio
+from scheduler.scheduler import Scheduler
+
+async def main() -> None:
+    sched = Scheduler()
+    stop_task = sched.start()  # non-blocking
+    # ... application runs ...
+    sched.stop()
+    await stop_task
+
+asyncio.run(main())
+```
+
 ## Metrics
 
 `MetricEngine` derives several microstructure features from buffered Binance
