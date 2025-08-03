@@ -67,3 +67,19 @@ Run-time enforcement can be toggled via the `LYNXCONTRACT` environment variable
 ```bash
 docker compose up --build
 ```
+
+## Testing
+
+Run the unit test suite:
+
+```bash
+pytest
+```
+
+## Running the UI
+
+Launch the Plotly Dash interface to visualise metrics:
+
+```bash
+python -m plotly_server.server
+```
