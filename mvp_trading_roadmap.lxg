@@ -1,0 +1,127 @@
+◎header|version=1.2|marker=unicode|encoding=utf-8|pack=false|created=2025-08-03T21:00:00+03:00|author=chatgpt
+◎/header
+
+◎nodes
+  ◎node|id=S0|type=phase|tags=[bootstrap]
+  Базовый проект: запуск пайплайна данных Binance → метрики → UI.
+  ◎/node
+
+  ◎node|id=S1|type=phase|tags=[metrics]
+  Реализация ключевых метрик для прогноза:
+  - D, OFI, S, CI, σ, μ̇
+  - расчёт φ и κ в реальном времени
+  ◎/node
+
+  ◎node|id=S2|type=phase|tags=[state]
+  StateEngine:
+  - алгоритм классификации FLAT / TREND / TURBULENCE
+  - хранение истории состояний
+  ◎/node
+
+  ◎node|id=S3|type=phase|tags=[forecast]
+  Модуль прогноза:
+  - модель AR(1) или простой EMA-forecast μ̇
+  - предсказание направления (1-5 мин)
+  ◎/node
+
+  ◎node|id=S4|type=phase|tags=[ui]
+  Расширение Dash:
+  - графики: depth, CI, σ, прогноз направления
+  - аннотация текущего режима
+  ◎/node
+
+  ◎node|id=S5|type=phase|tags=[alert]
+  Telegram оповещения:
+  - при смене режима
+  - при сильном прогнозе тренда
+  ◎/node
+
+  ◎node|id=S6|type=phase|tags=[mvp-test]
+  Тестирование MVP:
+  - проверка на Binance testnet
+  - latency < 1 c
+  ◎/node
+
+  ◎node|id=S7|type=phase|tags=[trading-proto]
+  Простейший прототип стратегии:
+  - paper trading
+  - buy/sell на основе прогнозируемого μ̇ и φ
+  ◎/node
+◎/nodes
+
+◎edges
+  ◎edge|id=R1|from=S0|to=S1|rel=precedes|directed=true◎/edge
+  ◎edge|id=R2|from=S1|to=S2|rel=precedes|directed=true◎/edge
+  ◎edge|id=R3|from=S2|to=S3|rel=precedes|directed=true◎/edge
+  ◎edge|id=R4|from=S3|to=S4|rel=precedes|directed=true◎/edge
+  ◎edge|id=R5|from=S4|to=S5|rel=precedes|directed=true◎/edge
+  ◎edge|id=R6|from=S5|to=S6|rel=precedes|directed=true◎/edge
+  ◎edge|id=R7|from=S6|to=S7|rel=precedes|directed=true◎/edge
+◎/edges
+
+◎execution
+  ◎task|id=T0|goal=binance_live_feed|priority=high|owner=dev
+  Настроить подключение к Binance, убедиться, что данные depth/trade поступают в DataBuffer.
+  ◎/task
+
+  ◎task|id=T1|goal=implement_metrics|priority=high|owner=quant
+  Реализовать вычисления: OFI, T_L, φ, μ̇, κ.
+  ◎/task
+
+  ◎task|id=T2|goal=classify_market_state|priority=high|owner=quant
+  Подключить StateEngine для классификации режима и проверок в UI.
+  ◎/task
+
+  ◎task|id=T3|goal=forecast_trend|priority=medium|owner=quant
+  Реализовать простой прогноз μ̇ (скользящее среднее + AR(1)).
+  ◎/task
+
+  ◎task|id=T4|goal=visualize_metrics|priority=medium|owner=frontend
+  Добавить графики CI/σ и стрелку прогноза в Dash UI.
+  ◎/task
+
+  ◎task|id=T5|goal=telegram_alerts|priority=medium|owner=devops
+  Настроить уведомления Telegram о смене режима и сильных трендовых сигналах.
+  ◎/task
+
+  ◎task|id=T6|goal=test_mvp|priority=medium|owner=qa
+  Проверить задержки и устойчивость MVP на testnet Binance.
+  ◎/task
+
+  ◎task|id=T7|goal=proto_strategy|priority=low|owner=quant
+  Простейший paper trading: покупать по тренду, уменьшать позиции в турбулентности.
+  ◎/task
+◎/execution
+
+◎methodology
+  1. **Инкрементальная разработка** (S0 → S7).  
+  2. **Data-driven калибровка** на истории Binance.  
+  3. **Сначала простые модели** (EMA, AR(1)) → позже ML.  
+  4. **Feedback loop** — лог прогнозов и факта.  
+  5. **Paper trading до реальных ордеров.**
+◎/methodology
+
+◎theory
+  **Константы**  
+  Δt_depth=100 мс, k=10, window_short=60, window_long=300, α=2/(N+1).  
+
+  **Формулы**  
+  D=Σ_{i=1..k}(bid_i+ask_i)  
+  OFI=Σ(ΔBid−ΔAsk)  
+  S=−Σ p_i log p_i, p_i=depth_i/Σ depth  
+  CI=1−S/log(#bins)  
+  T_L=EMA(updates_rate)/D  
+  φ=tanh(OFI_τ/scale), scale=median(|OFI_τ|,1 ч)  
+  μ̇=(mid_t−mid_{t−window_short})/(window_short·Δt)  
+  σ=stdev(log(mid_i/mid_{i−1}),window_long)  
+  κ=σ/(T_L+ε)  
+
+  **Режимы**  
+  CI>0.6 & |μ̇|<ε & σ<σ_low → FLAT  
+  |μ̇|≥ε & σ<σ_med → TREND  
+  σ≥σ_high or κ>κ_c → TURBULENCE  
+
+  **Forecast (EMA)**  
+  μ̂_{t+1}=αμ̇_t+(1−α)μ̂_t  
+  direction=sign(μ̂), confidence=|μ̂|/σ
+◎/theory

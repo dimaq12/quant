@@ -1,0 +1,144 @@
+◎header|version=1.0|marker=unicode|encoding=utf-8|pack=false|created=2025-08-03T17:45:00+03:00|author=chatgpt
+◎/header
+
+◎nodes
+  ◎node|id=M_BF|type=module|tags=[infra]
+  binance_feed
+  ◎/node
+  ◎node|id=I_BF|type=interface|tags=[class]
+  BinanceFeed
+  ◎/node
+  ◎node|id=C_BF|type=contract|tags=[module]
+  bf_contract (#@module …)
+  ◎/node
+
+  ◎node|id=M_DB|type=module|tags=[infra]
+  data_buffer
+  ◎/node
+  ◎node|id=I_DB|type=interface|tags=[class]
+  DataBuffer
+  ◎/node
+  ◎node|id=C_DB|type=contract|tags=[module]
+  db_contract
+  ◎/node
+
+  ◎node|id=M_ME|type=module|tags=[domain]
+  metric_engine
+  ◎/node
+  ◎node|id=I_ME|type=interface|tags=[class]
+  MetricEngine
+  ◎/node
+  ◎node|id=C_ME|type=contract|tags=[module]
+  me_contract
+  ◎/node
+
+  ◎node|id=M_SE|type=module|tags=[domain]
+  state_engine
+  ◎/node
+  ◎node|id=I_SE|type=interface|tags=[class]
+  StateEngine
+  ◎/node
+  ◎node|id=C_SE|type=contract|tags=[module]
+  se_contract
+  ◎/node
+
+  ◎node|id=M_PS|type=module|tags=[ui]
+  plotly_server
+  ◎/node
+  ◎node|id=I_PS|type=interface|tags=[func]
+  create_app
+  ◎/node
+  ◎node|id=C_PS|type=contract|tags=[module]
+  ps_contract
+  ◎/node
+
+  ◎node|id=M_TN|type=module|tags=[ui]
+  telegram_notifier
+  ◎/node
+  ◎node|id=I_TN|type=interface|tags=[class]
+  TelegramNotifier
+  ◎/node
+  ◎node|id=C_TN|type=contract|tags=[module]
+  tn_contract
+  ◎/node
+
+  ◎node|id=M_SC|type=module|tags=[app]
+  scheduler
+  ◎/node
+  ◎node|id=I_SC|type=interface|tags=[class]
+  Scheduler
+  ◎/node
+  ◎node|id=C_SC|type=contract|tags=[module]
+  sc_contract
+  ◎/node
+
+  ◎node|id=M_ST|type=module|tags=[config]
+  settings
+  ◎/node
+  ◎node|id=I_ST|type=interface|tags=[class]
+  Settings
+  ◎/node
+  ◎node|id=C_ST|type=contract|tags=[module]
+  st_contract
+  ◎/node
+
+  ◎node|id=M_UL|type=module|tags=[util]
+  util.logger
+  ◎/node
+  ◎node|id=I_UL|type=interface|tags=[func]
+  get_logger
+  ◎/node
+  ◎node|id=C_UL|type=contract|tags=[module]
+  ul_contract
+  ◎/node
+◎/nodes
+
+◎edges
+  ◎edge|id=E01|from=M_BF|to=C_BF|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E02|from=C_BF|to=I_BF|rel=guards|directed=true◎/edge
+  ◎edge|id=E03|from=M_DB|to=C_DB|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E04|from=C_DB|to=I_DB|rel=guards|directed=true◎/edge
+  ◎edge|id=E05|from=M_ME|to=C_ME|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E06|from=C_ME|to=I_ME|rel=guards|directed=true◎/edge
+  ◎edge|id=E07|from=M_SE|to=C_SE|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E08|from=C_SE|to=I_SE|rel=guards|directed=true◎/edge
+  ◎edge|id=E09|from=M_PS|to=C_PS|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E10|from=C_PS|to=I_PS|rel=guards|directed=true◎/edge
+  ◎edge|id=E11|from=M_TN|to=C_TN|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E12|from=C_TN|to=I_TN|rel=guards|directed=true◎/edge
+  ◎edge|id=E13|from=M_SC|to=C_SC|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E14|from=C_SC|to=I_SC|rel=guards|directed=true◎/edge
+  ◎edge|id=E15|from=M_ST|to=C_ST|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E16|from=C_ST|to=I_ST|rel=guards|directed=true◎/edge
+  ◎edge|id=E17|from=M_UL|to=C_UL|rel=has_contract|directed=true◎/edge
+  ◎edge|id=E18|from=C_UL|to=I_UL|rel=guards|directed=true◎/edge
+
+  ◎edge|id=E20|from=M_BF|to=M_ST|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E21|from=M_BF|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E22|from=M_DB|to=M_ST|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E23|from=M_DB|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E24|from=M_ME|to=M_DB|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E25|from=M_ME|to=M_ST|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E26|from=M_ME|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E27|from=M_SE|to=M_ST|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E28|from=M_SE|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E29|from=M_PS|to=M_ME|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E30|from=M_PS|to=M_ST|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E31|from=M_PS|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E32|from=M_TN|to=M_ST|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E33|from=M_TN|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+  ◎edge|id=E34|from=M_SC|to=M_UL|rel=depends|weight=0.9|directed=true◎/edge
+
+  ◎edge|id=E40|from=M_BF|to=I_BF|rel=exposes|directed=true◎/edge
+  ◎edge|id=E41|from=M_DB|to=I_DB|rel=exposes|directed=true◎/edge
+  ◎edge|id=E42|from=M_ME|to=I_ME|rel=exposes|directed=true◎/edge
+  ◎edge|id=E43|from=M_SE|to=I_SE|rel=exposes|directed=true◎/edge
+  ◎edge|id=E44|from=M_PS|to=I_PS|rel=exposes|directed=true◎/edge
+  ◎edge|id=E45|from=M_TN|to=I_TN|rel=exposes|directed=true◎/edge
+  ◎edge|id=E46|from=M_SC|to=I_SC|rel=exposes|directed=true◎/edge
+  ◎edge|id=E47|from=M_ST|to=I_ST|rel=exposes|directed=true◎/edge
+  ◎edge|id=E48|from=M_UL|to=I_UL|rel=exposes|directed=true◎/edge
+
+  ◎edge|id=E50|from=M_ME|to=M_PS|rel=restricts|directed=true◎/edge
+  ◎edge|id=E51|from=M_ME|to=M_TN|rel=restricts|directed=true◎/edge
+◎/edges
