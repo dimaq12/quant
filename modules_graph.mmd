@@ -1,0 +1,17 @@
+graph TD
+    BinanceFeed --> DataBuffer
+    DataBuffer --> MetricEngine
+    MetricEngine --> StateEngine
+    StateEngine --> TelegramNotifier
+    MetricEngine --> PlotlyServer
+    Scheduler --> BinanceFeed
+    Scheduler --> MetricEngine
+    Scheduler --> StateEngine
+    Scheduler --> PlotlyServer
+    Scheduler --> TelegramNotifier
+    Settings --> BinanceFeed
+    Settings --> DataBuffer
+    Settings --> MetricEngine
+    Settings --> StateEngine
+    Settings --> PlotlyServer
+    Settings --> TelegramNotifier

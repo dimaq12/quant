@@ -1,0 +1,10 @@
+aiohttp
+pandas
+polars
+numpy
+dash
+plotly
+python-binance
+python-telegram-bot
+apscheduler
+pydantic
