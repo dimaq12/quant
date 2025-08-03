@@ -26,6 +26,20 @@ graph TD
     Settings --> TelegramNotifier
 ```
 
+## Metrics
+
+`MetricEngine` derives several microstructure features from buffered Binance
+data:
+
+- **D** – aggregated order book depth
+- **OFI** – order flow imbalance
+- **S** – order book entropy
+- **CI** – concentration index
+- **T_L** – liquidity taking rate
+- **φ** – normalised order flow
+- **μ̇** – short term price drift
+- **κ** – turbulence ratio
+
 ## Contracts
 
 Every module and key class/function is annotated using **LynxContract** blocks.
