@@ -11,9 +11,9 @@ def test_compute_basic_metrics():
     engine._entropy = lambda df: 0.0
     metrics = engine.compute()
 
-    assert metrics['D'] == 2
-    assert 'CI' in metrics
-    assert 'OFI' not in metrics
+    assert metrics.D == 2
+    assert metrics.CI == 1.0
+    assert metrics.OFI == 0.0
 
 
 def test_compute_full_metrics():
@@ -26,7 +26,9 @@ def test_compute_full_metrics():
     engine._entropy = lambda df: 0.0
     metrics = engine.compute()
 
-    assert metrics['OFI'] == 1.0
-    assert metrics['mu_dot'] == pytest.approx(10.0)
-    for key in ['phi', 'T_L', 'sigma', 'kappa']:
-        assert key in metrics
+    assert metrics.OFI == 1.0
+    assert metrics.mu_dot == pytest.approx(10.0)
+    assert metrics.phi > 0.0
+    assert metrics.T_L > 0.0
+    assert metrics.sigma >= 0.0
+    assert metrics.kappa >= 0.0
